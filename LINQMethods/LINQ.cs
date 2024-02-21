@@ -39,12 +39,28 @@ namespace LINQPractice.LINQMethods
             //    Console.WriteLine(item.AId + " " + item.Name + " " + item.APL);
             //}
 
+
             // Who Knows C#
-            var result = accountants.Join(programmingLanguages, ac => ac.ProgrammingLanguageId, pl => pl.Id, (Accountant ac, ProgrammingLanguage pl) => new { AccountantId = ac.Id, Name = ac.AName, AccountantProgrammingLanguage = pl.Name }).Where(x => x.AccountantProgrammingLanguage == "C#");
+            //var result = accountants.Join(programmingLanguages, ac => ac.ProgrammingLanguageId, pl => pl.Id, (Accountant ac, ProgrammingLanguage pl) => new { AccountantId = ac.Id, Name = ac.AName, AccountantProgrammingLanguage = pl.Name }).Where(x => x.AccountantProgrammingLanguage == "C#");
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item.AccountantId + " " + item.Name + " " + item.AccountantProgrammingLanguage);
+            //}
+
+
+            //Who Knows Who
+            var result = programmingLanguages.GroupJoin(accountants, pl => pl.Id, ac => ac.ProgrammingLanguageId, (pl, ac) => new { ProgrammingLanguage = pl.Name, Accountants = ac });
             
             foreach (var item in result)
             {
-                Console.WriteLine(item.AccountantId + " " + item.Name + " " + item.AccountantProgrammingLanguage);
+                Console.Write(item.ProgrammingLanguage + " knows ");
+                foreach (var item2 in item.Accountants)
+                {
+                    Console.Write(item2.Id + " ");
+                    Console.Write(item2.AName + " ");
+                }
+                Console.WriteLine();
             }
         }
     }

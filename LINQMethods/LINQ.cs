@@ -39,7 +39,13 @@ namespace LINQPractice.LINQMethods
             //    Console.WriteLine(item.AId + " " + item.Name + " " + item.APL);
             //}
 
-            //
+            // Who Knows C#
+            var result = accountants.Join(programmingLanguages, ac => ac.ProgrammingLanguageId, pl => pl.Id, (Accountant ac, ProgrammingLanguage pl) => new { AccountantId = ac.Id, Name = ac.AName, AccountantProgrammingLanguage = pl.Name }).Where(x => x.AccountantProgrammingLanguage == "C#");
+            
+            foreach (var item in result)
+            {
+                Console.WriteLine(item.AccountantId + " " + item.Name + " " + item.AccountantProgrammingLanguage);
+            }
         }
     }
 }
